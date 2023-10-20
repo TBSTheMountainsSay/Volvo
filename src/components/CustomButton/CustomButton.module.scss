@@ -1,0 +1,22 @@
+.customButton {
+  font-weight: 500;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--text);
+}
+.isActive {
+}
+.isPromo {
+  width: 15.6rem;
+  height: 5.2rem;
+  background-color: var(--text);
+  color: var(--banner);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.isPromo:hover {
+  background-color: var(--banner);
+  color: var(--text);
+}

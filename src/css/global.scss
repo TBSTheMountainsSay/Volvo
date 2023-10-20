@@ -1,0 +1,22 @@
+@import 'color';
+
+*,
+*:after,
+*:before {
+  font-size: 10px;
+  font-family: Roboto;
+}
+
+:root {
+  @each $name, $color in $light-theme {
+    --#{$name}: #{$color};
+  }
+  color-scheme: light;
+}
+
+:root[color-scheme='light'] {
+  @each $name, $color in $light-theme {
+    --#{$name}: #{$color};
+  }
+  color-scheme: light;
+}
