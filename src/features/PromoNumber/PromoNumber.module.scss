@@ -18,7 +18,7 @@
     position: absolute;
     width: 38rem;
     height: 100%;
-    background-color: var(--banner);
+    background-color: var(--main1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,6 +36,7 @@
       font-weight: 700;
       font-size: 3.2rem;
       height: 3.8rem;
+      letter-spacing: 2px;
     }
     .subtitle {
       padding: 0 2.6rem;
@@ -55,7 +56,7 @@
       .checkbox-group_title {
         font-weight: 400;
         font-size: 1.4rem;
-        color: var(--personal);
+        color: var(--subline);
         line-height: 1.641rem;
         display: flex;
         text-align: start;

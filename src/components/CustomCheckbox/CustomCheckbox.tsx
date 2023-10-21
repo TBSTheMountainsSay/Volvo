@@ -13,13 +13,9 @@ const CustomCheckbox: React.FC<TCustomCheckboxProps> = ({
 }) => {
   return (
     <div className={styles.wrapper}>
-      {checked ? (
-        <button className={styles.checkbox} onClick={onChange}>
-          <SvgSelector id={'checkbox-checked'} />
-        </button>
-      ) : (
-        <button className={styles.checkbox} onClick={onChange} />
-      )}
+      <button className={styles.checkbox} onClick={onChange}>
+        {checked && <SvgSelector id={'checkbox-checked'} />}
+      </button>
     </div>
   );
 };

@@ -1,39 +1,51 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './CustomButton.module.scss';
 import clsx from 'clsx';
 
 type TCustomButtonProps = {
   text: any;
-  notActive?: boolean;
+  disabled?: boolean;
   isPromo?: boolean;
   isClose?: boolean;
   isNumPad?: boolean;
   isBackSpace?: boolean;
+  isFocused?: boolean;
   onClick?: () => void;
 };
 
 const CustomButton: React.FC<TCustomButtonProps> = ({
   text,
   isPromo,
-  notActive,
+  disabled,
   isClose,
   isNumPad,
   isBackSpace,
+  isFocused,
   onClick,
 }) => {
+  const button = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!button.current) return;
+    if (isFocused) {
+      button.current.focus();
+    }
+  }, [button, isFocused]);
+
   return (
-    <div
+    <button
+      ref={button}
       className={clsx(styles.customButton, {
-        [styles.notActive]: notActive,
         [styles.isPromo]: isPromo,
         [styles.isClose]: isClose,
         [styles.isNumPad]: isNumPad,
         [styles.isBackSpace]: isBackSpace,
       })}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
-    </div>
+    </button>
   );
 };
 

@@ -1,15 +1,17 @@
 $palette: (
-  white: #fff,
-  grey: #4e4e4e,
+  unic-white: #fff,
+  unic-grey: #4e4e4e,
   grey2: #565656,
-  blue: #86d3f4,
-  black: #000000,
+  unic-blue: #86d3f4,
+  unic-black: #000000,
+  unic-red: #ea0000,
 );
 
 $light-theme: (
-  def: map-get($palette, white),
-  notActive: map-get($palette, grey),
-  banner: map_get($palette, blue),
-  text: map_get($palette, black),
-  personal: map_get($palette, grey2),
+  def: map-get($palette, unic-white),
+  main1: map_get($palette, unic-blue),
+  main2: map_get($palette, unic-black),
+  subline: map_get($palette, grey2),
+  error: map_get($palette, unic-red),
+  disabled: map-get($palette, unic-grey),
 );

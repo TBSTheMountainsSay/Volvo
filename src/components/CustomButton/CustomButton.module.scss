@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--text);
+  border: 2px solid var(--main2);
   height: 100%;
   width: 100%;
   cursor: pointer;
@@ -12,32 +12,15 @@
   text-transform: uppercase;
 }
 
-.notActive {
-  border-color: var(--notActive);
-  color: var(--notActive);
-  cursor: default;
-}
-
-.isPromo {
-  width: 15.6rem;
-  height: 5.2rem;
-  background-color: var(--text);
-  color: var(--banner);
-  transition: 0.3s;
-}
-.isPromo:hover {
-  background-color: var(--banner);
-  color: var(--text);
-}
-
 .isClose {
   background-color: var(--def);
-  fill: var(--text);
+  fill: var(--main2);
 }
 
-.isClose:hover {
-  background-color: var(--text);
-  color: var(--text);
+.isClose:hover,
+.isClose:focus {
+  background-color: var(--main2);
+  color: var(--main2);
   fill: var(--def);
 }
 
@@ -45,10 +28,27 @@
   min-width: 18.2rem;
 }
 
-.isNumPad {
+.customButton:hover,
+.customButton:focus {
+  background-color: var(--main2);
+  color: var(--def);
 }
 
-.isNumPad:hover {
-  background-color: var(--text);
-  color: var(--def);
+.customButton:disabled {
+  pointer-events: none;
+  border-color: var(--disabled);
+  color: var(--disabled);
+  cursor: default;
+}
+
+.isPromo {
+  width: 15.6rem;
+  height: 5.2rem;
+  background-color: var(--main2);
+  color: var(--main1);
+  transition: 0.3s;
+}
+.isPromo:hover {
+  background-color: var(--main1);
+  color: var(--main2);
 }

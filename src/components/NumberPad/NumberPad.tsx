@@ -2,52 +2,39 @@ import React, { useState } from 'react';
 import styles from './NumberPad.module.scss';
 import CustomButton from '../CustomButton/CustomButton';
 
-type TNumberPadProps = {};
+type TNumberPadProps = {
+  isFocused: { x: number; y: number } | null;
+  onChange: (value: string) => void;
+};
 
-const NumberPad: React.FC<TNumberPadProps> = ({}) => {
-  const [IsFocused, setIsFocused] = useState<{ x: number; y: number } | null>(
-    null
-  );
-
+const NumberPad: React.FC<TNumberPadProps> = ({ isFocused, onChange }) => {
   type Button = {
-    x: number;
-    y: number;
     value: string;
   };
 
   const buttons: Button[][] = [
-    [
-      { x: 0, y: 0, value: '1' },
-      { x: 0, y: 1, value: '2' },
-      { x: 0, y: 2, value: '3' },
-    ],
-    [
-      { x: 1, y: 0, value: '4' },
-      { x: 1, y: 1, value: '5' },
-      { x: 1, y: 2, value: '6' },
-    ],
-    [
-      { x: 2, y: 0, value: '7' },
-      { x: 2, y: 1, value: '8' },
-      { x: 2, y: 2, value: '9' },
-    ],
-    [
-      { x: 3, y: 0, value: 'стереть' },
-      { x: 3, y: 1, value: '0' },
-    ],
+    [{ value: '1' }, { value: '2' }, { value: '3' }],
+    [{ value: '4' }, { value: '5' }, { value: '6' }],
+    [{ value: '7' }, { value: '8' }, { value: '9' }],
+    [{ value: 'стереть' }, { value: '0' }],
   ];
 
   return (
     <div className={styles['numpad-wrapper']}>
-      {buttons.map((row, rowIndex) => (
-        <div key={rowIndex} className={styles['numpad-row']}>
-          {row.map((button) =>
-            button.value === 'стереть' ? (
-              <CustomButton text={`${button.value}`} isNumPad isBackSpace />
-            ) : (
-              <CustomButton text={`${button.value}`} isNumPad />
-            )
-          )}
+      {buttons.map((row, y) => (
+        <div key={y} className={styles['numpad-row']}>
+          {row.map((button, x) => {
+            return (
+              <CustomButton
+                key={x}
+                text={`${button.value}`}
+                isNumPad
+                isBackSpace={button.value === 'стереть'}
+                isFocused={isFocused?.x === x && isFocused?.y === y}
+                onClick={() => onChange(button.value)}
+              />
+            );
+          })}
         </div>
       ))}
     </div>

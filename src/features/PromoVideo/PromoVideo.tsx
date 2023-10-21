@@ -24,7 +24,7 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
     }, 750);
   }, []);
 
-  const handleClick = () => {
+  const handleGoNextPage = () => {
     setActiveBanner(false);
     setActivePromo(false);
     setTimeout(() => {
@@ -51,7 +51,7 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
         </div>
         <img className={styles.qr} src={qr} alt={'qr-code'} />
         <div className={styles.text}>Сканируйте QR-код или нажмите ОК</div>
-        <CustomButton isPromo text={'Ок'} onClick={handleClick} />
+        <CustomButton isPromo text={'Ок'} onClick={handleGoNextPage} />
       </div>
     </div>
   );

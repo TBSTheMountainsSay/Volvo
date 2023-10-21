@@ -15,6 +15,10 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   const [activePromo, setActivePromo] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [isFocused, setIsFocused] = useState<
+    { x: number; y: number } | null | 'close' | 'submit'
+  >(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,7 +29,70 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
     }, 500);
   }, []);
 
-  const handleClick = () => {
+  useEffect(() => {
+    const handlePressButton = (event: KeyboardEvent) => {
+      //Обнулить бездействие
+      switch (event.key) {
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '0':
+          setPhoneNumber(phoneNumber + event.key);
+          break;
+        case 'Backspace':
+          setPhoneNumber(phoneNumber.slice(0, -1));
+          break;
+        case 'ArrowUp':
+        case 'ArrowDown':
+        case 'ArrowRight':
+        case 'ArrowLeft':
+          handleChangeFocus(event.key);
+          break;
+      }
+    };
+    document.addEventListener('keydown', handlePressButton);
+    return () => document.removeEventListener('keydown', handlePressButton);
+  }, [phoneNumber, isFocused]);
+
+  const handleChangeFocus = (direction: string) => {
+    if (typeof isFocused === 'string') {
+      setIsFocused({ x: 0, y: 0 });
+      return;
+    }
+    const newFocused = isFocused ? { ...isFocused } : { x: 0, y: 0 };
+    switch (direction) {
+      case 'ArrowUp':
+        newFocused.y -= 1;
+        break;
+      case 'ArrowDown':
+        newFocused.y += 1;
+        break;
+      case 'ArrowRight':
+        newFocused.x += 1;
+        break;
+      case 'ArrowLeft':
+        newFocused.x -= 1;
+        break;
+    }
+    if (newFocused.x < 0) return;
+    if (newFocused.x > 2 || newFocused.y < 0) {
+      setIsFocused('close');
+      return;
+    }
+    if (newFocused.y > 3) {
+      setIsFocused('submit');
+      return;
+    }
+    setIsFocused(newFocused);
+  };
+
+  const handleClosePage = () => {
     setActivePromo(false);
     setActivePanel(false);
     setTimeout(() => {
@@ -35,6 +102,17 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
 
   const handleClickCheckBox = () => {
     setIsChecked(!isChecked);
+  };
+
+  const handleWriteNumber = (value: string) => {
+    value === 'стереть'
+      ? setPhoneNumber(phoneNumber.slice(0, -1))
+      : setPhoneNumber(phoneNumber + value);
+  };
+
+  const formatPhoneNumber = (phoneNumber: string) => {
+    //todo доделать функцию
+    return phoneNumber;
   };
 
   return (
@@ -47,8 +125,9 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
       <div className={styles.close_button}>
         <CustomButton
           text={<SvgSelector id={'close'} className={styles.isClose} />}
-          onClick={handleClick}
+          onClick={handleClosePage}
           isClose
+          isFocused={isFocused === 'close'}
         />
       </div>
       <div
@@ -60,12 +139,15 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
         <div className={styles.title}>
           Введите ваш номер мобильного телефона
         </div>
-        <div className={styles.number}>+7(___)___-__-__</div>
+        <div className={styles.number}>{formatPhoneNumber(phoneNumber)}</div>
         <div className={styles.subtitle}>
           и с Вами свяжется наш менеждер для дальнейшей консультации
         </div>
         <div className={styles['numpad-wrapper']}>
-          <NumberPad />
+          <NumberPad
+            onChange={handleWriteNumber}
+            isFocused={isFocused as { x: number; y: number } | null}
+          />
         </div>
         <div className={styles['checkbox-group']}>
           <CustomCheckbox checked={isChecked} onChange={handleClickCheckBox} />
@@ -74,7 +156,11 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
           </div>
         </div>
         <div className={styles.accept}>
-          <CustomButton text={'Подтвердить номер'} notActive />
+          <CustomButton
+            text={'Подтвердить номер'}
+            disabled={phoneNumber.length < 10 || !isChecked}
+            isFocused={isFocused === 'submit'}
+          />
         </div>
       </div>
     </div>
