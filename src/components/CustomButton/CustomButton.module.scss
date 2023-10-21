@@ -5,18 +5,50 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--text);
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
 }
-.isActive {
+
+.notActive {
+  border-color: var(--notActive);
+  color: var(--notActive);
+  cursor: default;
 }
+
 .isPromo {
   width: 15.6rem;
   height: 5.2rem;
   background-color: var(--text);
   color: var(--banner);
   transition: 0.3s;
-  cursor: pointer;
 }
 .isPromo:hover {
   background-color: var(--banner);
   color: var(--text);
+}
+
+.isClose {
+  background-color: var(--def);
+  fill: var(--text);
+}
+
+.isClose:hover {
+  background-color: var(--text);
+  color: var(--text);
+  fill: var(--def);
+}
+
+.isBackSpace {
+  min-width: 18.2rem;
+}
+
+.isNumPad {
+}
+
+.isNumPad:hover {
+  background-color: var(--text);
+  color: var(--def);
 }

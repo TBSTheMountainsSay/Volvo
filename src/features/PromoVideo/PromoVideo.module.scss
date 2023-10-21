@@ -1,6 +1,6 @@
-.promo {
+.promo_video {
   position: relative;
-  transition: 1.25s;
+  transition: 0.5s;
   .video {
   }
   .banner {
@@ -40,11 +40,4 @@
   .banner_disabled {
     right: -26rem;
   }
-}
-.promo_active {
-  opacity: 1;
-}
-
-.promo_disabled {
-  opacity: 0;
 }

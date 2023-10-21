@@ -1,0 +1,13 @@
+.numpad-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+  .numpad-row {
+    display: flex;
+    flex-direction: row;
+    width: 28.4rem;
+    height: 5.2rem;
+    gap: 1rem;
+  }
+}

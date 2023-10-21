@@ -7,6 +7,14 @@
   font-family: Roboto;
 }
 
+.promo_active {
+  opacity: 1;
+}
+
+.promo_disabled {
+  opacity: 0;
+}
+
 :root {
   @each $name, $color in $light-theme {
     --#{$name}: #{$color};

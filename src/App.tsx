@@ -2,13 +2,20 @@ import React from 'react';
 import 'src/css/reset.scss';
 import 'src/css/global.scss';
 import './App.css';
-import Promo from './features/Promo/Promo';
+import PromoVideo from './features/PromoVideo/PromoVideo';
+import PromoNumber from './features/PromoNumber/PromoNumber';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Promo />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<PromoVideo />} />
+          <Route path="/promoNumber" element={<PromoNumber />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -1,13 +1,15 @@
 $palette: (
   white: #fff,
-  grey: #b1b1b1,
+  grey: #4e4e4e,
+  grey2: #565656,
   blue: #86d3f4,
   black: #000000,
 );
 
 $light-theme: (
   def: map-get($palette, white),
-  def-hover: map-get($palette, grey),
+  notActive: map-get($palette, grey),
   banner: map_get($palette, blue),
   text: map_get($palette, black),
+  personal: map_get($palette, grey2),
 );
