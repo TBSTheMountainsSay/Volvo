@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './PromoVideo.module.scss';
 // @ts-ignore
 import BgVideo from 'src/assets/TheEpicSplit.mp4';
@@ -6,16 +6,22 @@ import clsx from 'clsx';
 import qr from '../../assets/qr-code.png';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { useNavigate } from 'react-router-dom';
+import { useVideo } from '../../hooks/useVideo';
 
 type TPromoProps = {};
 
 const PromoVideo: React.FC<TPromoProps> = ({}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const navigate = useNavigate();
 
   const [activePromo, setActivePromo] = useState<boolean>(false);
   const [activeBanner, setActiveBanner] = useState<boolean>(false);
 
+  const { startTime, changeStartTime } = useVideo();
+
   useEffect(() => {
+    handlePlay();
     setTimeout(() => {
       setActiveBanner(true);
     }, 5000);
@@ -30,6 +36,16 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
     setTimeout(() => {
       navigate('/promoNumber');
     }, 500);
+    if (!videoRef.current) return;
+    changeStartTime(videoRef.current.currentTime);
+  };
+
+  const handlePlay = () => {
+    if (!videoRef.current) return;
+    videoRef.current.currentTime = startTime;
+    videoRef.current.play();
+    // videoRef.current.muted = false;
+    // videoRef.current.volume = 0.1;
   };
 
   return (
@@ -39,7 +55,14 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
         promo_disabled: !activePromo,
       })}
     >
-      <video src={BgVideo} autoPlay loop muted className={styles.video} />
+      <video
+        src={BgVideo}
+        muted
+        autoPlay
+        loop
+        className={styles.video}
+        ref={videoRef}
+      />
       <div
         className={clsx(styles.banner, {
           [styles.banner_active]: activeBanner,

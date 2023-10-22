@@ -13,6 +13,8 @@ type TPromoNumberProps = {};
 const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   const navigate = useNavigate();
 
+  const [timer, setTimer] = useState(0);
+  let timerId: NodeJS.Timeout | null = null;
   const [activePromo, setActivePromo] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<boolean>(false);
   const [activeAcceptPanel, setActiveAcceptPanel] = useState<boolean>(false);
@@ -21,6 +23,27 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   const [isFocused, setIsFocused] = useState<
     { x: number; y: number } | null | 'close' | 'submit'
   >(null);
+
+  useEffect(() => {
+    const handleSomeActivity = () => {
+      setTimer(0);
+    };
+
+    if (timer >= 10) {
+      handleClose();
+    } else {
+      timerId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    }
+    document.addEventListener('mousemove', handleSomeActivity);
+    document.addEventListener('keydown', handleSomeActivity);
+    return () => {
+      if (timerId) clearInterval(timerId);
+      document.removeEventListener('mousemove', handleSomeActivity);
+      document.removeEventListener('keydown', handleSomeActivity);
+    };
+  }, [timer]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -33,7 +56,6 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
 
   useEffect(() => {
     const handlePressButton = (event: KeyboardEvent) => {
-      //Обнулить бездействие
       switch (event.key) {
         case '1':
         case '2':
