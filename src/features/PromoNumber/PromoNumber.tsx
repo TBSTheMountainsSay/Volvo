@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import SvgSelector from '../../components/SvgSelector/SvgSelector';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import NumberPad from '../../components/NumberPad/NumberPad';
+import AcceptMessage from '../../components/AcceptMessage/AcceptMessage';
 
 type TPromoNumberProps = {};
 
@@ -14,6 +15,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
 
   const [activePromo, setActivePromo] = useState<boolean>(false);
   const [activePanel, setActivePanel] = useState<boolean>(false);
+  const [activeAcceptPanel, setActiveAcceptPanel] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [isFocused, setIsFocused] = useState<
@@ -93,12 +95,19 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
     setIsFocused(newFocused);
   };
 
-  const handleClosePage = () => {
-    setActivePromo(false);
-    setActivePanel(false);
-    setTimeout(() => {
-      navigate('/');
-    }, 500);
+  const handleClose = () => {
+    if (activeAcceptPanel) {
+      setActiveAcceptPanel(false);
+      setTimeout(() => {
+        setActivePanel(true);
+      }, 500);
+    } else {
+      setActivePromo(false);
+      setActivePanel(false);
+      setTimeout(() => {
+        navigate('/');
+      }, 500);
+    }
   };
 
   const handleClickCheckBox = () => {
@@ -126,6 +135,15 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
     return formattedNumber;
   };
 
+  const handleAcceptNumber = () => {
+    if (isChecked && phoneNumber.length === 10) {
+      setActivePanel(false);
+      setTimeout(() => {
+        setActiveAcceptPanel(true);
+      }, 500);
+    }
+  };
+
   return (
     <div
       className={clsx(styles.promo_number, {
@@ -136,7 +154,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
       <div className={styles.close_button}>
         <CustomButton
           text={<SvgSelector id={'close'} className={styles.isClose} />}
-          onClick={handleClosePage}
+          onClick={handleClose}
           isClose
           isFocused={isFocused === 'close'}
         />
@@ -171,8 +189,17 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
             text={'Подтвердить номер'}
             disabled={phoneNumber.length < 10 || !isChecked}
             isFocused={isFocused === 'submit'}
+            onClick={handleAcceptNumber}
           />
         </div>
+      </div>
+      <div
+        className={clsx(styles.panel, {
+          [styles.panel_active]: activeAcceptPanel,
+          [styles.panel_disabled]: !activeAcceptPanel,
+        })}
+      >
+        <AcceptMessage />
       </div>
     </div>
   );
