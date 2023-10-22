@@ -43,6 +43,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
         case '8':
         case '9':
         case '0':
+          if (phoneNumber.length >= 10) break;
           setPhoneNumber(phoneNumber + event.key);
           break;
         case 'Backspace':
@@ -105,14 +106,24 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   };
 
   const handleWriteNumber = (value: string) => {
-    value === 'стереть'
-      ? setPhoneNumber(phoneNumber.slice(0, -1))
-      : setPhoneNumber(phoneNumber + value);
+    if (value === 'стереть') {
+      setPhoneNumber(phoneNumber.slice(0, -1));
+    } else if (phoneNumber.length < 10) {
+      setPhoneNumber(phoneNumber + value);
+    }
   };
 
   const formatPhoneNumber = (phoneNumber: string) => {
-    //todo доделать функцию
-    return phoneNumber;
+    let formattedNumber: string = '+7(___)___-__-__';
+    for (let i = 0; i < phoneNumber.length; i++) {
+      phoneNumber[i] === '(' || phoneNumber[i] === ')' || phoneNumber[i] === '-'
+        ? (formattedNumber = formattedNumber.replace(
+            formattedNumber.charAt(formattedNumber.indexOf(phoneNumber[i])),
+            phoneNumber[i]
+          ))
+        : (formattedNumber = formattedNumber.replace('_', phoneNumber[i]));
+    }
+    return formattedNumber;
   };
 
   return (
