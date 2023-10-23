@@ -7,6 +7,7 @@ import SvgSelector from '../../components/SvgSelector/SvgSelector';
 import CustomCheckbox from '../../components/CustomCheckbox/CustomCheckbox';
 import NumberPad from '../../components/NumberPad/NumberPad';
 import AcceptMessage from '../../components/AcceptMessage/AcceptMessage';
+import { numverifyAPI } from '../../api/numverifyAPI';
 
 type TPromoNumberProps = {};
 
@@ -20,6 +21,9 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   const [activeAcceptPanel, setActiveAcceptPanel] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
+
+  const [isValidNumber, setIsValidNumber] = useState<boolean>(true);
+
   const [isFocused, setIsFocused] = useState<
     { x: number; y: number } | null | 'close' | 'submit'
   >(null);
@@ -31,6 +35,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
 
     if (timer >= 10) {
       handleClose();
+      setTimer(0);
     } else {
       timerId = setInterval(() => {
         setTimer((prevTimer) => prevTimer + 1);
@@ -71,6 +76,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
           setPhoneNumber(phoneNumber + event.key);
           break;
         case 'Backspace':
+          setIsValidNumber(true);
           setPhoneNumber(phoneNumber.slice(0, -1));
           break;
         case 'ArrowUp':
@@ -138,6 +144,7 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
 
   const handleWriteNumber = (value: string) => {
     if (value === 'стереть') {
+      setIsValidNumber(true);
       setPhoneNumber(phoneNumber.slice(0, -1));
     } else if (phoneNumber.length < 10) {
       setPhoneNumber(phoneNumber + value);
@@ -157,13 +164,18 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
     return formattedNumber;
   };
 
-  const handleAcceptNumber = () => {
+  const handleAcceptNumber = async () => {
     if (isChecked && phoneNumber.length === 10) {
-      setActivePanel(false);
-      setTimeout(() => {
-        setActiveAcceptPanel(true);
-      }, 500);
+      const { data } = await numverifyAPI.checkNumber(phoneNumber);
+      data.valid ? showSuccessMessage() : setIsValidNumber(false);
     }
+  };
+
+  const showSuccessMessage = () => {
+    setActivePanel(false);
+    setTimeout(() => {
+      setActiveAcceptPanel(true);
+    }, 500);
   };
 
   return (
@@ -190,7 +202,11 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
         <div className={styles.title}>
           Введите ваш номер мобильного телефона
         </div>
-        <div className={styles.number}>{formatPhoneNumber(phoneNumber)}</div>
+        <div
+          className={clsx(styles.number, { [styles.error]: !isValidNumber })}
+        >
+          {formatPhoneNumber(phoneNumber)}
+        </div>
         <div className={styles.subtitle}>
           и с Вами свяжется наш менеждер для дальнейшей консультации
         </div>
@@ -200,12 +216,25 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
             isFocused={isFocused as { x: number; y: number } | null}
           />
         </div>
-        <div className={styles['checkbox-group']}>
-          <CustomCheckbox checked={isChecked} onChange={handleClickCheckBox} />
-          <div className={styles['checkbox-group_title']}>
-            Согласие на обработку персональных данных
+
+        {isValidNumber ? (
+          <div className={styles['checkbox-group']}>
+            <CustomCheckbox
+              checked={isChecked}
+              onChange={handleClickCheckBox}
+            />
+            <div className={styles['checkbox-group_title']}>
+              Согласие на обработку персональных данных
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={styles['checkbox-group']}>
+            <div className={clsx(styles.error, styles.errormessage)}>
+              Неверно введён номер
+            </div>
+          </div>
+        )}
+
         <div className={styles.accept}>
           <CustomButton
             text={'Подтвердить номер'}

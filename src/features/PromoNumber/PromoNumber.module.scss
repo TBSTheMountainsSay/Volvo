@@ -66,6 +66,15 @@
       width: 28.4rem;
       height: 5.2rem;
     }
+    .error {
+      color: var(--error);
+    }
+    .errormessage {
+      width: 28.4rem;
+      font-weight: 500;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
   }
   .panel_active {
     left: 0;
