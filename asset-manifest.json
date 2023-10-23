@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/Volvo/static/css/main.6ae914bc.css",
-    "main.js": "/Volvo/static/js/main.32b5ae1a.js",
-    "static/js/787.7573f821.chunk.js": "/Volvo/static/js/787.7573f821.chunk.js",
-    "static/media/TheEpicSplit.mp4": "/Volvo/static/media/TheEpicSplit.ff7fe0edfcb242e04ea3.mp4",
-    "static/media/background.jpg": "/Volvo/static/media/background.b51578b5a1be79a61f3e.jpg",
-    "index.html": "/Volvo/index.html",
-    "main.6ae914bc.css.map": "/Volvo/static/css/main.6ae914bc.css.map",
-    "main.32b5ae1a.js.map": "/Volvo/static/js/main.32b5ae1a.js.map",
-    "787.7573f821.chunk.js.map": "/Volvo/static/js/787.7573f821.chunk.js.map"
+    "main.css": "/volvo/static/css/main.c9d136a4.css",
+    "main.js": "/volvo/static/js/main.215b272c.js",
+    "static/js/787.7573f821.chunk.js": "/volvo/static/js/787.7573f821.chunk.js",
+    "static/media/TheEpicSplit.mp4": "/volvo/static/media/TheEpicSplit.ff7fe0edfcb242e04ea3.mp4",
+    "static/media/background.jpg": "/volvo/static/media/background.b51578b5a1be79a61f3e.jpg",
+    "index.html": "/volvo/index.html",
+    "main.c9d136a4.css.map": "/volvo/static/css/main.c9d136a4.css.map",
+    "main.215b272c.js.map": "/volvo/static/js/main.215b272c.js.map",
+    "787.7573f821.chunk.js.map": "/volvo/static/js/787.7573f821.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6ae914bc.css",
-    "static/js/main.32b5ae1a.js"
+    "static/css/main.c9d136a4.css",
+    "static/js/main.215b272c.js"
   ]
 }
