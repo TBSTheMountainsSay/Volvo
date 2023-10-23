@@ -34,7 +34,7 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
     setActiveBanner(false);
     setActivePromo(false);
     setTimeout(() => {
-      navigate('/promoNumber');
+      navigate('/promo-number');
     }, 500);
     if (!videoRef.current) return;
     changeStartTime(videoRef.current.currentTime);
