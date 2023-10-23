@@ -3,7 +3,7 @@ import styles from './CustomButton.module.scss';
 import clsx from 'clsx';
 
 type TCustomButtonProps = {
-  text: any;
+  text: JSX.Element | string;
   disabled?: boolean;
   isPromo?: boolean;
   isClose?: boolean;

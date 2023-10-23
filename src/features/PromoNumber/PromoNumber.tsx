@@ -11,6 +11,15 @@ import { numverifyAPI } from '../../api/numverifyAPI';
 
 type TPromoNumberProps = {};
 
+const formatPhoneNumber = (phoneNumber: string) => {
+  let formattedNumber: string = '+7(___)___-__-__';
+  phoneNumber.split('').forEach((char) => {
+    if (!['(', ')', '-'].includes(char))
+      formattedNumber = formattedNumber.replace('_', char);
+  });
+  return formattedNumber;
+};
+
 const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
   const navigate = useNavigate();
 
@@ -149,19 +158,6 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
     } else if (phoneNumber.length < 10) {
       setPhoneNumber(phoneNumber + value);
     }
-  };
-
-  const formatPhoneNumber = (phoneNumber: string) => {
-    let formattedNumber: string = '+7(___)___-__-__';
-    for (let i = 0; i < phoneNumber.length; i++) {
-      phoneNumber[i] === '(' || phoneNumber[i] === ')' || phoneNumber[i] === '-'
-        ? (formattedNumber = formattedNumber.replace(
-            formattedNumber.charAt(formattedNumber.indexOf(phoneNumber[i])),
-            phoneNumber[i]
-          ))
-        : (formattedNumber = formattedNumber.replace('_', phoneNumber[i]));
-    }
-    return formattedNumber;
   };
 
   const handleAcceptNumber = async () => {
