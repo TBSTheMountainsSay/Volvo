@@ -42,14 +42,14 @@ const PromoNumber: React.FC<TPromoNumberProps> = ({}) => {
       setTimer(0);
     };
 
-    // if (timer >= 10) {
-    //   handleClose();
-    //   setTimer(0);
-    // } else {
-    //   timerId = setInterval(() => {
-    //     setTimer((prevTimer) => prevTimer + 1);
-    //   }, 1000);
-    // }
+    if (timer >= 10) {
+      handleClose();
+      setTimer(0);
+    } else {
+      timerId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    }
     document.addEventListener('mousemove', handleSomeActivity);
     document.addEventListener('keydown', handleSomeActivity);
     return () => {
