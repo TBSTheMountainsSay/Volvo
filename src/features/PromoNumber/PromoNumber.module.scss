@@ -1,5 +1,7 @@
 .promo_number {
   background-image: url('../../assets/background.jpg');
+  background-position: 50% 50%;
+  background-size: 100% auto;
   width: 100%;
   height: 100%;
   position: relative;
@@ -10,6 +12,7 @@
     height: 5.2rem;
     top: 2rem;
     right: 2rem;
+    z-index: 1;
   }
 
   .panel {
@@ -21,12 +24,12 @@
     background-color: var(--main1);
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
     gap: 1.3rem;
     transition: 0.5s;
     .title {
-      padding-top: 7.2rem;
       font-weight: 400;
       font-size: 2.6rem;
       line-height: 3.047rem;
@@ -81,5 +84,25 @@
   }
   .panel_disabled {
     left: -39rem;
+  }
+}
+
+@media (max-width: 1400px) {
+  .promo_number {
+    background-size: auto 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .promo_number {
+    .close_button {
+      width: 7rem;
+      height: 4rem;
+      top: 1rem;
+      right: 1rem;
+    }
+    .panel {
+      width: 100%;
+    }
   }
 }
