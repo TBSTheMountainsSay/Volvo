@@ -69,9 +69,7 @@ const PromoVideo: React.FC<TPromoProps> = ({}) => {
           [styles.banner_disabled]: !activeBanner,
         })}
       >
-        <div className={styles.title}>
-          ИСПОЛНИТЕ МЕЧТУ ВАШЕГО МАЛЫША! <br /> ПОДАРИТЕ ЕМУ СОБАКУ!
-        </div>
+        <div className={styles.title}>ИСПОЛНИТЕ СВОЮ МЕЧТУ!</div>
         <img className={styles.qr} src={qr} alt={'qr-code'} />
         <div className={styles.text}>Сканируйте QR-код или нажмите ОК</div>
         <CustomButton isPromo text={'Ок'} onClick={handleGoNextPage} />
